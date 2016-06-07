@@ -11,7 +11,7 @@ for each file
     save xml to .nfo file
 
 """
-from plexcustomshowhelper import create_nfo
+from plexcustomshowhelper import create_nfo, parse_filename_attributes
 
 def test_create_nfo_xml():
     expected = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' \
@@ -26,7 +26,13 @@ def test_create_nfo_xml():
     assert actual == expected
 
 def test_parse_filename_attributes():
-    pass
+    tests = (
+        ('S01E01.title.mp4', ('title', 1, 1)),
+        ('S3E12.show with space.mp4', ('show with space', 3, 12)),
+        ('title first.S05E22.mp4', ('title first', 5, 22)),
+    )
+    for filename, attrs in tests:
+        assert parse_filename_attributes(filename) == attrs
 
 def test_filter_files_without_nfo_files():
     pass
