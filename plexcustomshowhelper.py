@@ -21,3 +21,7 @@ def parse_filename_attributes(filename):
     season, episode = m.group(1), m.group(2)
 
     return title, int(season), int(episode)
+
+def filter_files_without_nfo_files(input_files):
+    nfo_files = [f[:-4] for f in input_files if f.endswith('.nfo')]
+    return [f for f in input_files if f[:-4] not in nfo_files]
