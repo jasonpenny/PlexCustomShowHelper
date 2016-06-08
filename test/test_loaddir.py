@@ -12,7 +12,7 @@ for each file
 
 """
 from plexcustomshowhelper import create_nfo, parse_filename_attributes, \
-        filter_files_without_nfo_files
+        filter_video_files_without_nfo_files
 
 def test_create_nfo_xml():
     expected = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' \
@@ -38,12 +38,17 @@ def test_parse_filename_attributes():
 def test_filter_files_without_nfo_files():
     expected = []
     input_files = []
-    assert filter_files_without_nfo_files(input_files) == expected
+    assert filter_video_files_without_nfo_files(input_files) == expected
 
     expected = ['a.mp4', 'b.mp4', 'c.mp4']
     input_files = ['a.mp4', 'b.mp4', 'c.mp4']
-    assert filter_files_without_nfo_files(input_files) == expected
+    assert filter_video_files_without_nfo_files(input_files) == expected
 
     expected = ['a.mp4', 'c.mp4']
     input_files = ['a.mp4', 'b.mp4', 'c.mp4', 'b.nfo', 'd.mp4', 'd.nfo', 'e.nfo']
-    assert filter_files_without_nfo_files(input_files) == expected
+    assert filter_video_files_without_nfo_files(input_files) == expected
+
+    # ignore jpg and gif image files
+    expected = ['a.mp4', 'b.mp4', 'c.mp4']
+    input_files = ['a.mp4', 'b.mp4', 'c.mp4', 'ignore1.jpg', 'ignore2.gif']
+    assert filter_video_files_without_nfo_files(input_files) == expected

@@ -22,6 +22,10 @@ def parse_filename_attributes(filename):
 
     return title, int(season), int(episode)
 
-def filter_files_without_nfo_files(input_files):
-    nfo_files = [f[:-4] for f in input_files if f.endswith('.nfo')]
-    return [f for f in input_files if f[:-4] not in nfo_files]
+def filter_video_files_without_nfo_files(input_files):
+    nfo_and_img_files = [f[:-4] for f in input_files
+                         if f.endswith('.nfo') or
+                         f.endswith('.jpg') or
+                         f.endswith('.gif')]
+    return [f for f in input_files
+            if f[:-4] not in nfo_and_img_files]
