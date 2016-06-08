@@ -1,16 +1,3 @@
-"""
-Plan:
-
-get directory list
-
-get list of files which don't have corresponding .nfo files
-
-for each file
-    parse filename into season, episode, video title
-    create xml
-    save xml to .nfo file
-
-"""
 from plexcustomshowhelper import create_nfo, parse_filename_attributes, \
         filter_video_files_without_nfo_files
 

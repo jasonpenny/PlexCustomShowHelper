@@ -1,4 +1,7 @@
+#!/usr/bin/env python
+import os
 import re
+import sys
 
 def create_nfo(title, season, episode):
     return '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>\n' \
@@ -29,3 +32,22 @@ def filter_video_files_without_nfo_files(input_files):
                          f.endswith('.gif')]
     return [f for f in input_files
             if f[:-4] not in nfo_and_img_files]
+
+def run(directory):
+    file_list = [f for f in os.listdir(directory)
+                 if not f.startswith('.')]
+    files_to_process = filter_video_files_without_nfo_files(file_list)
+    for filename in files_to_process:
+        title, season, episode = parse_filename_attributes(filename)
+
+        xml_content = create_nfo(title, season, episode)
+
+        nfo_filename = os.path.join(directory, filename[:-4] + '.nfo')
+        with open(nfo_filename, 'w') as f:
+            f.write(xml_content)
+
+if __name__ == '__main__':
+    if sys.argv[1:]:
+        run(sys.argv[1])
+    else:
+        print 'Usage: %s <directory>' % sys.argv[0]
